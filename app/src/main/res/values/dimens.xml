@@ -24,9 +24,8 @@
   -->
 
 <resources>
-    <dimen name="text_margin">16dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="default_margin">8dp</dimen>
+    <dimen name="movie_title_textsize">16sp</dimen>
+    <dimen name="default_small_margin">4dp</dimen>
+    <dimen name="movie_card_minheight">140dp</dimen>
 </resources>

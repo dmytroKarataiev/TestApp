@@ -24,7 +24,6 @@
  */
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.android.databinding'
 
 android {
     compileSdkVersion 24
@@ -45,6 +44,7 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'MOVIE_DB_API_KEY', movieDbApiKey
     }
+    dataBinding.enabled = true
 }
 
 ext {

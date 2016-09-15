@@ -25,6 +25,8 @@
 
 package com.adkdevelopment.movieslist.ui.presenters;
 
+import android.util.Log;
+
 import com.adkdevelopment.movieslist.App;
 import com.adkdevelopment.movieslist.data.remote.Results;
 import com.adkdevelopment.movieslist.ui.base.BaseMvpPresenter;
@@ -43,6 +45,8 @@ import rx.schedulers.Schedulers;
 public class ListPresenter
         extends BaseMvpPresenter<ListContract.View>
         implements ListContract.Presenter {
+
+    private static final String TAG = ListPresenter.class.getSimpleName();
 
     private Subscription mSubscription;
 
@@ -63,6 +67,7 @@ public class ListPresenter
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e(TAG, "onError: ", e);
                         getMvpView().showError();
                     }
 

@@ -27,25 +27,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="movie"
             type="com.adkdevelopment.movieslist.data.remote.Movie" />
-
+        <variable
+            name="click"
+            type="com.adkdevelopment.movieslist.ui.interfaces.ItemClickListener" />
     </data>
 
     <android.support.v7.widget.CardView
         android:id="@+id/movieitem_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="140dp"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="4dp">
+        android:layout_margin="@dimen/default_margin"
+        android:minHeight="@dimen/movie_card_minheight"
+        android:onClick="@{(v) -> click.onItemClicked(movie, v)}"
+        app:cardCornerRadius="@dimen/default_small_margin">
 
         <RelativeLayout
             android:id="@+id/movieitem_relativelayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/movieitem_image"
@@ -53,7 +55,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/movieitem_description"
-                android:padding="4dp"
+                android:padding="@dimen/default_small_margin"
                 android:src="@drawable/ic_photo"
                 app:imageUrl="@{movie.posterPath}" />
 
@@ -63,10 +65,10 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/movieitem_image"
                 android:layout_toRightOf="@id/movieitem_image"
-                android:padding="8dp"
+                android:padding="@dimen/default_margin"
                 android:text="@{movie.title}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textSize="16sp" />
+                android:textSize="@dimen/movie_title_textsize" />
 
             <TextView
                 android:id="@+id/movieitem_overview"
@@ -77,9 +79,9 @@
                 android:layout_toRightOf="@id/movieitem_image"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
                 android:text="@{movie.overview}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat" />
 
@@ -90,9 +92,9 @@
                 android:layout_below="@id/movieitem_overview"
                 android:layout_toEndOf="@id/movieitem_image"
                 android:layout_toRightOf="@id/movieitem_image"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
                 android:text='@{String.format(@string/movie_rating, movie.voteAverage)}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 

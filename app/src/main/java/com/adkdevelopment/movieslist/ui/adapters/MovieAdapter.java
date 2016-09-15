@@ -35,17 +35,18 @@ import android.widget.ImageView;
 import com.adkdevelopment.movieslist.data.remote.Movie;
 import com.adkdevelopment.movieslist.databinding.ItemMovieBinding;
 import com.adkdevelopment.movieslist.ui.interfaces.ItemClickListener;
+import com.adkdevelopment.movieslist.ui.interfaces.ItemTouchHelperAdapter;
 import com.adkdevelopment.movieslist.ui.viewholders.MovieViewHolder;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Adapter for the ListFragment with Movies.
  * Created by karataev on 9/15/16.
  */
-public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
+        implements ItemTouchHelperAdapter {
 
     private List<Movie> mMovies;
     private ItemClickListener<Movie, View> mListener;
@@ -60,14 +61,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         holder.getBinding().setMovie(mMovies.get(position));
-        //holder.getBinding().setClick(mListener);
+        holder.getBinding().setClick(mListener);
     }
 
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView imageView, String v) {
         // TODO: 9/15/16 add progress bar && error image
-        String backdropPath = "https://image.tmdb.org/t/p/" + "w342/";
-        Picasso.with(imageView.getContext()).load(backdropPath + v).into(imageView);
+        Picasso.with(imageView.getContext()).load(Movie.PATH + v).into(imageView);
     }
 
     @Override
@@ -77,9 +77,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     public void setTasks(List<Movie> movies,
                          ItemClickListener<Movie, View> listener) {
-        mMovies = new ArrayList<>(movies);
+        mMovies = movies;
         notifyDataSetChanged();
         mListener = listener;
     }
 
+    @Override
+    public boolean onItemDismiss(int position) {
+        notifyItemRemoved(position);
+        mMovies.remove(position);
+        return true;
+    }
 }

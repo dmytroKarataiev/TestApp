@@ -23,45 +23,28 @@
  *
  */
 
-package com.adkdevelopment.movieslist.ui.viewholders;
-
-import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.adkdevelopment.movieslist.databinding.ItemMovieBinding;
-import com.adkdevelopment.movieslist.ui.interfaces.ItemTouchHelperViewHolder;
+package com.adkdevelopment.movieslist.ui.interfaces;
 
 /**
- * ViewHolder for the list of movies.
  * Created by karataev on 9/15/16.
+ *
+ * Interface to notify an item ViewHolder of relevant callbacks from {@link
+ * android.support.v7.widget.helper.ItemTouchHelper.Callback}.
+ *
+ * @author Paul Burke (ipaulpro)
  */
-
-public class MovieViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
-
-    private ItemMovieBinding mBinding;
-
-    public MovieViewHolder(View itemView) {
-        super(itemView);
-        mBinding = DataBindingUtil.bind(itemView);
-    }
+public interface ItemTouchHelperViewHolder {
 
     /**
-     * Public interface for the binding.
-     * @return current binding.
+     * Called when the ItemTouchHelper first registers an item as being moved or swiped.
+     * Implementations should update the item view to indicate it's active state.
      */
-    public ItemMovieBinding getBinding() {
-        return mBinding;
-    }
+    void onItemSelected();
 
-    @Override
-    public void onItemSelected() {
-        itemView.setBackgroundColor(Color.LTGRAY);
-    }
 
-    @Override
-    public void onItemClear() {
-        itemView.setBackgroundColor(Color.WHITE);
-    }
+    /**
+     * Called when the ItemTouchHelper has completed the move or swipe, and the active item
+     * state should be cleared.
+     */
+    void onItemClear();
 }

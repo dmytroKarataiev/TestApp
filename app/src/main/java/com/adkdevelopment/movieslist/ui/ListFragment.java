@@ -30,6 +30,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +41,12 @@ import com.adkdevelopment.movieslist.data.remote.Movie;
 import com.adkdevelopment.movieslist.databinding.FragmentMainBinding;
 import com.adkdevelopment.movieslist.ui.adapters.MovieAdapter;
 import com.adkdevelopment.movieslist.ui.base.BaseFragment;
+import com.adkdevelopment.movieslist.ui.behavior.TouchHelperCallback;
 import com.adkdevelopment.movieslist.ui.contracts.ListContract;
 import com.adkdevelopment.movieslist.ui.interfaces.ItemClickListener;
 import com.adkdevelopment.movieslist.ui.presenters.ListPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +54,9 @@ import java.util.List;
  */
 public class ListFragment extends BaseFragment 
         implements ListContract.View, ItemClickListener<Movie, View> {
-    
+
+    public static final String TAG = ListFragment.class.getSimpleName();
+
     private ListPresenter mPresenter;
     private MovieAdapter mAdapter;
 
@@ -59,10 +65,15 @@ public class ListFragment extends BaseFragment
     // Due to using Presenter - we have to save position of a RecyclerView manually
     // that's a hacky way, in the production we should retain whole presenter
     private static final String POSITION = "pos";
+    private static final String MOVIES = "movies";
     private int mPosition = 0;
+    private List<Movie> mMovies;
 
     // view via databinding
     private RecyclerView mRecyclerView;
+
+    // swipe to delete
+    private ItemTouchHelper mItemTouchHelper;
 
     public ListFragment() {
     }
@@ -95,15 +106,32 @@ public class ListFragment extends BaseFragment
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // add swipe to delete
+        ItemTouchHelper.Callback callback = new TouchHelperCallback(mAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+
         mPresenter = new ListPresenter();
         mPresenter.attachView(this);
-        mPresenter.fetchData();
+
+        // prevent re-downloading of movies on each rotation
+        if (savedInstanceState == null) {
+            mPresenter.fetchData();
+        } else {
+            mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
+            if (mMovies != null) {
+                showData(mMovies);
+            } else {
+                mPresenter.fetchData();
+            }
+        }
 
         return view;
     }
 
     @Override
     public void showData(List<Movie> movieList) {
+        mMovies = movieList;
         mAdapter.setTasks(movieList, this);
         mRecyclerView.scrollToPosition(mPosition);
     }
@@ -115,24 +143,25 @@ public class ListFragment extends BaseFragment
 
     @Override
     public void showError() {
-
+        Log.e(TAG, "showError: ");
     }
 
     @Override
     public void showProgress(boolean isInProgress) {
-
+        // TODO: 9/15/16 add progress 
     }
 
     @Override
     public void onItemClicked(Movie item, View view) {
-        // TODO: 9/15/16 add another interface 
+        // TODO: 9/15/16 add another interface
+        Log.d(TAG, "onItemClicked: " + item.getTitle());
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mPresenter.detachView();
-        // TODO: 9/15/16
+        // TODO: 9/15/16 add interface for activity
         // mListener = null;
     }
 
@@ -142,6 +171,7 @@ public class ListFragment extends BaseFragment
         mPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
                 .findFirstVisibleItemPosition();
         outState.putInt(POSITION, mPosition);
+        outState.putParcelableArrayList(MOVIES, (ArrayList<Movie>) mMovies);
     }
 
     @Override
@@ -151,6 +181,5 @@ public class ListFragment extends BaseFragment
             mPosition = savedInstanceState.getInt(POSITION);
         }
     }
-
 
 }

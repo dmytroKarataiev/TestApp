@@ -25,7 +25,7 @@
 
 <resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">MoviesList</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Popular Movies</string>
     <string name="action_settings">Settings</string>
     <string name="movieitem_description">Movie Poster Image</string>
 

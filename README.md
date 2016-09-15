@@ -1,5 +1,6 @@
 # REST client for the MoviesDB
 ![Animation](materials/animation.gif)
+
 A client for a popular Movies Database with MVP architecture and Databinding.
 
 ## Requirements

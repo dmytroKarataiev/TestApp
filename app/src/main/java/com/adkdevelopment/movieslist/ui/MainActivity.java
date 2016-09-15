@@ -25,10 +25,11 @@
 
 package com.adkdevelopment.movieslist.ui;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import com.adkdevelopment.movieslist.R;
+import com.adkdevelopment.movieslist.databinding.ActivityMainBinding;
 import com.adkdevelopment.movieslist.ui.base.BaseActivity;
 import com.adkdevelopment.movieslist.ui.contracts.MainContract;
 
@@ -41,9 +42,8 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setSupportActionBar(binding.toolbar);
     }
 
 }

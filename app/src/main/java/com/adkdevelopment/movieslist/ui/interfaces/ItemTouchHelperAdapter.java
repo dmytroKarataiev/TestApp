@@ -23,45 +23,16 @@
  *
  */
 
-package com.adkdevelopment.movieslist.ui.viewholders;
-
-import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.adkdevelopment.movieslist.databinding.ItemMovieBinding;
-import com.adkdevelopment.movieslist.ui.interfaces.ItemTouchHelperViewHolder;
+package com.adkdevelopment.movieslist.ui.interfaces;
 
 /**
- * ViewHolder for the list of movies.
+ * Helper to dismiss the item on swipe.
  * Created by karataev on 9/15/16.
  */
-
-public class MovieViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
-
-    private ItemMovieBinding mBinding;
-
-    public MovieViewHolder(View itemView) {
-        super(itemView);
-        mBinding = DataBindingUtil.bind(itemView);
-    }
-
+public interface ItemTouchHelperAdapter {
     /**
-     * Public interface for the binding.
-     * @return current binding.
+     * Called when an item has been dismissed by a swipe.
+     * @param position The position of the item dismissed.
      */
-    public ItemMovieBinding getBinding() {
-        return mBinding;
-    }
-
-    @Override
-    public void onItemSelected() {
-        itemView.setBackgroundColor(Color.LTGRAY);
-    }
-
-    @Override
-    public void onItemClear() {
-        itemView.setBackgroundColor(Color.WHITE);
-    }
+    boolean onItemDismiss(int position);
 }

@@ -25,6 +25,9 @@
 
 package com.adkdevelopment.movieslist.data.remote;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -35,7 +38,9 @@ import java.util.List;
  * Main Movie object for the list of movies.
  * Created by karataev on 9/15/16.
  */
-public class Movie {
+public class Movie implements Parcelable {
+
+    public static final String PATH = "https://image.tmdb.org/t/p/w342/";
 
     @SerializedName("adult")
     @Expose
@@ -332,4 +337,59 @@ public class Movie {
         this.voteCount = voteCount;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+        dest.writeString(this.backdropPath);
+        dest.writeList(this.genreIds);
+        dest.writeLong(this.id);
+        dest.writeString(this.originalLanguage);
+        dest.writeString(this.originalTitle);
+        dest.writeString(this.overview);
+        dest.writeString(this.releaseDate);
+        dest.writeString(this.posterPath);
+        dest.writeDouble(this.popularity);
+        dest.writeString(this.title);
+        dest.writeByte(this.video ? (byte) 1 : (byte) 0);
+        dest.writeDouble(this.voteAverage);
+        dest.writeLong(this.voteCount);
+    }
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        this.adult = in.readByte() != 0;
+        this.backdropPath = in.readString();
+        this.genreIds = new ArrayList<Long>();
+        in.readList(this.genreIds, Long.class.getClassLoader());
+        this.id = in.readLong();
+        this.originalLanguage = in.readString();
+        this.originalTitle = in.readString();
+        this.overview = in.readString();
+        this.releaseDate = in.readString();
+        this.posterPath = in.readString();
+        this.popularity = in.readDouble();
+        this.title = in.readString();
+        this.video = in.readByte() != 0;
+        this.voteAverage = in.readDouble();
+        this.voteCount = in.readLong();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }
