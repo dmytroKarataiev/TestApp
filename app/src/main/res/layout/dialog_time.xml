@@ -24,11 +24,13 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="@dimen/default_margin"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/default_margin"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/dialog_image"
@@ -38,7 +40,6 @@
         android:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:text="Current time:"
         android:id="@+id/dialog_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

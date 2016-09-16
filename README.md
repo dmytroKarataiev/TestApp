@@ -1,7 +1,8 @@
 # REST client for the MoviesDB
 ![Animation](materials/animation.gif)
 
-A client for a popular Movies Database with MVP architecture and Databinding.
+Client for a popular Movies Database with MVP architecture and Databinding.
+* Important - for the app to work you must add Movies DB API key to the gradle.properties file as a line: movieDbApiKey = "API KEY".
 
 ## Requirements
 * 2 activities: list with a RecyclerView and a Detail activity.

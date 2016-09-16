@@ -30,7 +30,7 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;gi
+import android.os.Build;
 import android.os.SystemClock;
 
 import com.adkdevelopment.movieslist.data.managers.ApiManager;
@@ -42,6 +42,9 @@ import com.adkdevelopment.movieslist.data.services.DialogService;
  */
 public class App extends Application {
 
+    private static ApiManager sApiManager;
+
+    // dialog interval
     private static final long PERIOD = 2 * 60 * 1000;
 
     @Override
@@ -50,7 +53,6 @@ public class App extends Application {
         scheduleAlarms(getApplicationContext());
     }
 
-    private static ApiManager sApiManager;
 
     // Singleton Retrofit for Movies
     public static ApiManager getApiManager() {
@@ -76,6 +78,4 @@ public class App extends Application {
             mgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + PERIOD, pi);
         }
     }
-
-
 }

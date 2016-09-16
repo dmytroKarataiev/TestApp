@@ -25,6 +25,7 @@
 
 package com.adkdevelopment.movieslist.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -45,7 +46,6 @@ import com.squareup.picasso.Picasso;
  * Custom AlertDialog showing time.
  * Created by karataev on 9/15/16.
  */
-
 public class TimeDialog extends DialogFragment {
 
     private long mCurrentTime = 0L;
@@ -69,6 +69,7 @@ public class TimeDialog extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        @SuppressLint("InflateParams")
         View dialogView = inflater.inflate(R.layout.dialog_time, null);
         Picasso.with(getContext())
                 .load(getString(R.string.dialog_watchlink))
