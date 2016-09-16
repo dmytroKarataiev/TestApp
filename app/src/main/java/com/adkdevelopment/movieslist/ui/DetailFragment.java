@@ -95,7 +95,6 @@ public class DetailFragment extends BaseFragment
 
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView imageView, String v) {
-        // TODO: 9/15/16 add progress bar && error image
         String path = Movie.PATH;
         if (imageView.getId() == R.id.backdrop) {
             path += Movie.HIGH_DIM;

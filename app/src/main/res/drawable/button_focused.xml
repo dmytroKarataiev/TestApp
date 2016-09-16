@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ MIT License
   ~
@@ -23,23 +24,15 @@
   ~
   -->
 
-<resources xmlns:xliff="http://schemas.android.com/tools">
-    <string name="app_name">MoviesList</string>
-    <string name="title_activity_main">Popular Movies</string>
-    <string name="movieitem_description">Movie Poster Image</string>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
 
-    <string name="movie_rating">Rating: <xliff:g id="rating">%1$,.1f</xliff:g>/10</string>
-    <string name="movie_release">Release date: <xliff:g id="release">%s</xliff:g></string>
-    <string name="dialog_time">Current time: <xliff:g id="release">%s</xliff:g></string>
+    <corners android:radius="@dimen/default_small_margin" />
 
-    <string name="detail_title">Movie details</string>
-    <string name="transition_card" translatable="false">card</string>
-    <string name="transition_poster" translatable="false">poster</string>
-    <string name="transition_title" translatable="false">poster</string>
-    <string name="transition_overview" translatable="false">poster</string>
-    <string name="transition_rating" translatable="false">poster</string>
-    <string name="dialog_description">AlertD Dialog Image</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_watchlink">http://www.publicdomainpictures.net/pictures/80000/velka/clock-icon.jpg</string>
+    <gradient
+        android:centerColor="#805290c3"
+        android:endColor="#806f9fc7"
+        android:startColor="#8078a4c9" />
 
-</resources>
+</shape>
+

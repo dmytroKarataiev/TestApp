@@ -23,30 +23,30 @@
  *
  */
 
-package com.adkdevelopment.movieslist.ui.contracts;
+package com.adkdevelopment.movieslist.data;
 
-import com.adkdevelopment.movieslist.data.remote.Movie;
-import com.adkdevelopment.movieslist.ui.base.MvpPresenter;
-import com.adkdevelopment.movieslist.ui.base.MvpView;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-import java.util.List;
+import com.adkdevelopment.movieslist.data.services.DialogService;
+import com.adkdevelopment.movieslist.ui.base.BaseActivity;
+import com.adkdevelopment.movieslist.ui.utils.Utilities;
 
 /**
- * MVP Contract for a ListFragment and Presenter.
- * Created by karataev on 9/15/16.
+ * Broadcast Receiver of time messages.
  */
-public class ListContract {
-
-    public interface Presenter extends MvpPresenter<View> {
-        void fetchData();
+public class TimeReceiver extends BroadcastReceiver {
+    public TimeReceiver() {
     }
 
-    public interface View extends MvpView {
-        void showData(List<Movie> movieList);
-
-        void showEmpty();
-
-        void showError();
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (context instanceof BaseActivity) {
+            if (Utilities.checkForeground(context)) {
+                ((BaseActivity) context).showDialog(intent.getLongExtra(DialogService.CUR_TIME,
+                        System.currentTimeMillis()));
+            }
+        }
     }
-
 }

@@ -53,16 +53,13 @@ public class ListPresenter
     @Override
     public void fetchData() {
         checkViewAttached();
-        getMvpView().showProgress(true);
 
-        // TODO: 9/15/16 add pagination
         mSubscription = App.getApiManager().getMoviesService().getMoviesPopular(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Results>() {
                     @Override
                     public void onCompleted() {
-                        getMvpView().showProgress(false);
                     }
 
                     @Override

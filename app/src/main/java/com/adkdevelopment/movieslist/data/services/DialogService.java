@@ -23,30 +23,38 @@
  *
  */
 
-package com.adkdevelopment.movieslist.ui.contracts;
+package com.adkdevelopment.movieslist.data.services;
 
-import com.adkdevelopment.movieslist.data.remote.Movie;
-import com.adkdevelopment.movieslist.ui.base.MvpPresenter;
-import com.adkdevelopment.movieslist.ui.base.MvpView;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
-import java.util.List;
+import com.adkdevelopment.movieslist.App;
 
 /**
- * MVP Contract for a ListFragment and Presenter.
- * Created by karataev on 9/15/16.
+ * Service which sends a broadcast to open the Dialog with current time.
  */
-public class ListContract {
+public class DialogService extends Service {
 
-    public interface Presenter extends MvpPresenter<View> {
-        void fetchData();
+    public static final String BROADCAST_MESSAGE = "com.adkdevelopment.movielist";
+    public static final String CUR_TIME = "cur_time";
+
+    public DialogService() {
     }
 
-    public interface View extends MvpView {
-        void showData(List<Movie> movieList);
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-        void showEmpty();
-
-        void showError();
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Intent message = new Intent(BROADCAST_MESSAGE);
+        message.putExtra(CUR_TIME, System.currentTimeMillis());
+        sendBroadcast(message);
+        App.scheduleAlarms(getApplicationContext());
+        stopSelf();
+        return super.onStartCommand(intent, flags, startId);
     }
 
 }

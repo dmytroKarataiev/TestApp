@@ -134,11 +134,6 @@ public class ListFragment extends BaseFragment
     }
 
     @Override
-    public void showProgress(boolean isInProgress) {
-        // TODO: 9/15/16 add progress 
-    }
-
-    @Override
     public void onItemClicked(Movie item, View view) {
         if (mListener != null) {
             mListener.onFragmentInteraction(item, view);

@@ -26,7 +26,14 @@
 package com.adkdevelopment.movieslist.ui.base;
 
 import android.annotation.SuppressLint;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.adkdevelopment.movieslist.data.TimeReceiver;
+import com.adkdevelopment.movieslist.data.services.DialogService;
+import com.adkdevelopment.movieslist.ui.TimeDialog;
 
 /**
  * Base for every Activity in the App.
@@ -34,4 +41,34 @@ import android.support.v7.app.AppCompatActivity;
  */
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
+
+    private TimeReceiver mBroadcastReceiver;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBroadcastReceiver = new TimeReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(DialogService.BROADCAST_MESSAGE);
+        registerReceiver(mBroadcastReceiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    /**
+     * Shows a dialog with current time.
+     * @param time in millis.
+     */
+    public void showDialog(long time) {
+        TimeDialog newFragment = TimeDialog.newInstance(time);
+        newFragment.show(getSupportFragmentManager(), "time");
+    }
 }
