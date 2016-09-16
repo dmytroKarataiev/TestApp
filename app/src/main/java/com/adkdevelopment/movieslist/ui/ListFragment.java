@@ -25,6 +25,7 @@
 
 package com.adkdevelopment.movieslist.ui;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,11 +39,12 @@ import android.view.ViewGroup;
 
 import com.adkdevelopment.movieslist.R;
 import com.adkdevelopment.movieslist.data.remote.Movie;
-import com.adkdevelopment.movieslist.databinding.FragmentMainBinding;
+import com.adkdevelopment.movieslist.databinding.FragmentListBinding;
 import com.adkdevelopment.movieslist.ui.adapters.MovieAdapter;
 import com.adkdevelopment.movieslist.ui.base.BaseFragment;
 import com.adkdevelopment.movieslist.ui.behavior.TouchHelperCallback;
 import com.adkdevelopment.movieslist.ui.contracts.ListContract;
+import com.adkdevelopment.movieslist.ui.interfaces.FragmentListener;
 import com.adkdevelopment.movieslist.ui.interfaces.ItemClickListener;
 import com.adkdevelopment.movieslist.ui.presenters.ListPresenter;
 
@@ -55,12 +57,13 @@ import java.util.List;
 public class ListFragment extends BaseFragment 
         implements ListContract.View, ItemClickListener<Movie, View> {
 
-    public static final String TAG = ListFragment.class.getSimpleName();
+    private static final String TAG = ListFragment.class.getSimpleName();
 
     private ListPresenter mPresenter;
     private MovieAdapter mAdapter;
 
-    // TODO: 9/15/16 add fragment listener
+    // Fragment listener for the Activity
+    private FragmentListener mListener;
 
     // Due to using Presenter - we have to save position of a RecyclerView manually
     // that's a hacky way, in the production we should retain whole presenter
@@ -72,31 +75,15 @@ public class ListFragment extends BaseFragment
     // view via databinding
     private RecyclerView mRecyclerView;
 
-    // swipe to delete
-    private ItemTouchHelper mItemTouchHelper;
-
     public ListFragment() {
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ListFragment.
-     */
-    public static ListFragment newInstance() {
-        ListFragment fragment = new ListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FragmentMainBinding binding =
-                DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        FragmentListBinding binding =
+                DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
 
         View view = binding.getRoot();
 
@@ -108,8 +95,8 @@ public class ListFragment extends BaseFragment
 
         // add swipe to delete
         ItemTouchHelper.Callback callback = new TouchHelperCallback(mAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
         mPresenter = new ListPresenter();
         mPresenter.attachView(this);
@@ -153,16 +140,27 @@ public class ListFragment extends BaseFragment
 
     @Override
     public void onItemClicked(Movie item, View view) {
-        // TODO: 9/15/16 add another interface
-        Log.d(TAG, "onItemClicked: " + item.getTitle());
+        if (mListener != null) {
+            mListener.onFragmentInteraction(item, view);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentListener) {
+            mListener = (FragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mPresenter.detachView();
-        // TODO: 9/15/16 add interface for activity
-        // mListener = null;
+        mListener = null;
     }
 
     @Override

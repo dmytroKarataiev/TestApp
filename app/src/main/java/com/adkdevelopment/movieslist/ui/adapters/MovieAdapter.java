@@ -67,7 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView imageView, String v) {
         // TODO: 9/15/16 add progress bar && error image
-        Picasso.with(imageView.getContext()).load(Movie.PATH + v).into(imageView);
+        Picasso.with(imageView.getContext()).load(Movie.PATH + Movie.LOW_DIM + v).into(imageView);
     }
 
     @Override
@@ -83,9 +83,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     }
 
     @Override
-    public boolean onItemDismiss(int position) {
-        notifyItemRemoved(position);
+    public void onItemDismiss(int position) {
         mMovies.remove(position);
-        return true;
+        notifyItemRemoved(position);
     }
 }

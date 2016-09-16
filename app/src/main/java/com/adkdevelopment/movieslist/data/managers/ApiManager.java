@@ -32,7 +32,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Manager ti perform all REST-related work.
+ * Manager to perform all REST-related work.
  * Created by karataev on 9/15/16.
  */
 public class ApiManager {

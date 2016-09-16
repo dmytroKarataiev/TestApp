@@ -40,7 +40,7 @@ import com.adkdevelopment.movieslist.ui.interfaces.ItemTouchHelperViewHolder;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
-    private ItemMovieBinding mBinding;
+    private final ItemMovieBinding mBinding;
 
     public MovieViewHolder(View itemView) {
         super(itemView);

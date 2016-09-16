@@ -25,33 +25,26 @@
 
 package com.adkdevelopment.movieslist.ui;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
-import android.view.View;
+import android.view.MenuItem;
 
 import com.adkdevelopment.movieslist.R;
-import com.adkdevelopment.movieslist.data.remote.Movie;
-import com.adkdevelopment.movieslist.databinding.ActivityMainBinding;
+import com.adkdevelopment.movieslist.databinding.ActivityDetailBinding;
 import com.adkdevelopment.movieslist.ui.base.BaseActivity;
-import com.adkdevelopment.movieslist.ui.contracts.MainContract;
-import com.adkdevelopment.movieslist.ui.interfaces.FragmentListener;
 
 /**
- * Main Activity of the app.
+ * Activity with movie details.
  */
-public class MainActivity extends BaseActivity
-        implements MainContract.View, FragmentListener {
+public class DetailActivity extends BaseActivity {
 
-    private ActivityMainBinding mBinding;
+    private ActivityDetailBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         initActionBar();
     }
 
@@ -65,23 +58,23 @@ public class MainActivity extends BaseActivity
 
         // Add back button to the actionbar
         if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setLogo(R.drawable.logo_title);
+            actionBar.setTitle(R.string.detail_title);
         }
     }
 
     @Override
-    public void onFragmentInteraction(Movie movie, View view) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(Movie.MOVIE_EXTRA, movie);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            @SuppressWarnings("unchecked")
-            // TODO: 9/15/16 add shared transition 
-            Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this)
-                    .toBundle();
-            startActivity(intent, bundle);
-        } else {
-            startActivity(intent);
+        // copy the behavior of the hardware back button
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 }

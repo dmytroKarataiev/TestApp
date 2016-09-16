@@ -40,7 +40,11 @@ import java.util.List;
  */
 public class Movie implements Parcelable {
 
-    public static final String PATH = "https://image.tmdb.org/t/p/w342/";
+    public static final String PATH = "https://image.tmdb.org/t/p/";
+    public static final String LOW_DIM = "w342/";
+    public static final String HIGH_DIM = "w780/";
+
+    public static final String MOVIE_EXTRA = "movie_extra";
 
     @SerializedName("adult")
     @Expose
@@ -50,7 +54,7 @@ public class Movie implements Parcelable {
     private String backdropPath;
     @SerializedName("genre_ids")
     @Expose
-    private List<Long> genreIds = new ArrayList<Long>();
+    private List<Long> genreIds = new ArrayList<>();
     @SerializedName("id")
     @Expose
     private long id;
@@ -366,7 +370,7 @@ public class Movie implements Parcelable {
     protected Movie(Parcel in) {
         this.adult = in.readByte() != 0;
         this.backdropPath = in.readString();
-        this.genreIds = new ArrayList<Long>();
+        this.genreIds = new ArrayList<>();
         in.readList(this.genreIds, Long.class.getClassLoader());
         this.id = in.readLong();
         this.originalLanguage = in.readString();

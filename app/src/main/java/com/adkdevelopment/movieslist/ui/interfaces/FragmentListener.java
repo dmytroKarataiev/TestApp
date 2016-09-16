@@ -25,14 +25,19 @@
 
 package com.adkdevelopment.movieslist.ui.interfaces;
 
+import android.view.View;
+
+import com.adkdevelopment.movieslist.data.remote.Movie;
+
 /**
- * Helper to dismiss the item on swipe.
+ * This interface must be implemented by activities that contain fragments
+ * to allow an interaction in a fragment to be communicated
+ * to the activity and potentially other fragments contained in that
+ * activity.
+ *
  * Created by karataev on 9/15/16.
  */
-public interface ItemTouchHelperAdapter {
-    /**
-     * Called when an item has been dismissed by a swipe.
-     * @param position The position of the item dismissed.
-     */
-    void onItemDismiss(int position);
+
+public interface FragmentListener {
+    void onFragmentInteraction(Movie movie, View view);
 }

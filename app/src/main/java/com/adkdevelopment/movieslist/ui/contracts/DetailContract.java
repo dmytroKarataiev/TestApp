@@ -23,16 +23,27 @@
  *
  */
 
-package com.adkdevelopment.movieslist.ui.interfaces;
+package com.adkdevelopment.movieslist.ui.contracts;
+
+import android.content.Intent;
+
+import com.adkdevelopment.movieslist.data.remote.Movie;
+import com.adkdevelopment.movieslist.ui.base.MvpPresenter;
+import com.adkdevelopment.movieslist.ui.base.MvpView;
 
 /**
- * Helper to dismiss the item on swipe.
+ * MVP Contract for a DetailFragment and Presenter.
  * Created by karataev on 9/15/16.
  */
-public interface ItemTouchHelperAdapter {
-    /**
-     * Called when an item has been dismissed by a swipe.
-     * @param position The position of the item dismissed.
-     */
-    void onItemDismiss(int position);
+public class DetailContract {
+
+    public interface Presenter extends MvpPresenter<View> {
+        void loadData(Intent intent);
+    }
+
+    public interface View extends MvpView {
+        void showData(Movie movie);
+
+        void showError();
+    }
 }

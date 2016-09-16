@@ -10,7 +10,8 @@ A client for a popular Movies Database with MVP architecture and Databinding.
 * Delete an element from the RecyclerView on swipe.
 * Elements change color on click.
 * SharedTransition from a list to details.
-* A Service which starts each 2 minutes and shows an AlertDialog with current time (Current time - HH:mm) and anu imagefrom the internet.
+* A Service which starts each 2 minutes and shows an AlertDialog with current time (Current time - HH:mm) and any image from the internet.
+* BroadCastReceiver to get notifications from the Service.
 * Databinding for a list of elements.
 * Portrait and landscape modes.
 
