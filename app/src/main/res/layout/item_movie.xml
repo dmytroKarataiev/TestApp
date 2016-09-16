@@ -24,12 +24,15 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="movie"
             type="com.adkdevelopment.movieslist.data.remote.Movie" />
+
         <variable
             name="click"
             type="com.adkdevelopment.movieslist.ui.interfaces.ItemClickListener" />
@@ -42,7 +45,9 @@
         android:layout_margin="@dimen/default_margin"
         android:minHeight="@dimen/movie_card_minheight"
         android:onClick="@{(v) -> click.onItemClicked(movie, v)}"
-        app:cardCornerRadius="@dimen/default_small_margin">
+        android:transitionName="@string/transition_card"
+        app:cardCornerRadius="@dimen/default_small_margin"
+        tools:targetApi="lollipop">
 
         <RelativeLayout
             android:id="@+id/movieitem_relativelayout"
@@ -57,6 +62,7 @@
                 android:contentDescription="@string/movieitem_description"
                 android:padding="@dimen/default_small_margin"
                 android:src="@drawable/ic_photo"
+                android:transitionName="@string/transition_poster"
                 app:imageUrl="@{movie.posterPath}" />
 
             <TextView
@@ -68,7 +74,8 @@
                 android:padding="@dimen/default_margin"
                 android:text="@{movie.title}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textSize="@dimen/movie_title_textsize" />
+                android:textSize="@dimen/movie_title_textsize"
+                android:transitionName="@string/transition_title" />
 
             <TextView
                 android:id="@+id/movieitem_overview"
@@ -83,7 +90,8 @@
                 android:paddingLeft="@dimen/default_margin"
                 android:paddingRight="@dimen/default_margin"
                 android:text="@{movie.overview}"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat"
+                android:transitionName="@string/transition_overview" />
 
             <TextView
                 android:id="@+id/movieitem_rating"
@@ -96,7 +104,8 @@
                 android:paddingLeft="@dimen/default_margin"
                 android:paddingRight="@dimen/default_margin"
                 android:text='@{String.format(@string/movie_rating, movie.voteAverage)}'
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:transitionName="@string/transition_rating" />
 
         </RelativeLayout>
 

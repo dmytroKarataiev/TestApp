@@ -25,12 +25,13 @@
 
 package com.adkdevelopment.movieslist.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
+import android.util.Pair;
 import android.view.View;
 
 import com.adkdevelopment.movieslist.R;
@@ -75,10 +76,19 @@ public class MainActivity extends BaseActivity
         intent.putExtra(Movie.MOVIE_EXTRA, movie);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            @SuppressWarnings("unchecked")
-            // TODO: 9/15/16 add shared transition 
-            Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this)
-                    .toBundle();
+            Pair poster = Pair.create(view.findViewById(R.id.movieitem_image),
+                    view.findViewById(R.id.movieitem_image).getTransitionName());
+            Pair title = Pair.create(view.findViewById(R.id.movieitem_title),
+                    view.findViewById(R.id.movieitem_title).getTransitionName());
+            Pair overview = Pair.create(view.findViewById(R.id.movieitem_overview),
+                    view.findViewById(R.id.movieitem_overview).getTransitionName());
+            Pair rating = Pair.create(view.findViewById(R.id.movieitem_rating),
+                    view.findViewById(R.id.movieitem_rating).getTransitionName());
+            Pair card = Pair.create(view.findViewById(R.id.movieitem_card),
+                    view.findViewById(R.id.movieitem_card).getTransitionName());
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this,
+                    poster, title, overview, rating, card).toBundle();
+
             startActivity(intent, bundle);
         } else {
             startActivity(intent);

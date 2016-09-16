@@ -32,5 +32,10 @@
     <string name="movie_release">Release date: <xliff:g id="release">%s</xliff:g></string>
 
     <string name="detail_title">Movie details</string>
+    <string name="transition_card" translatable="false">card</string>
+    <string name="transition_poster" translatable="false">poster</string>
+    <string name="transition_title" translatable="false">poster</string>
+    <string name="transition_overview" translatable="false">poster</string>
+    <string name="transition_rating" translatable="false">poster</string>
 
 </resources>
